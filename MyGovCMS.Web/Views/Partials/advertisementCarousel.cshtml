@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@using MyGovCMS.Core.Helpers
+@{
+
+    var currentNode = Model.AncestorOrSelf();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var reportslist = currentNode.Descendants<Advertisement>().FirstOrDefault();
+    var reports = currentNode.Descendants<Advertisement>().Where(x => x.IsVisible()).OrderByDescending(y => y.Date);
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isReportListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = isReportListPage ? 10 : 6;
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfReports = reports.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = reports.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+    var carouselID = "advertisementCarousel";
+}
+
+
+@if (reports != null && reports.Any())
+{
+
+    <div class="carousel slide" data-ride="carousel" id="@carouselID">
+        <div class="carousel-inner" role="listbox">
+            @{
+                int slideCount = 0;
+                foreach (var item in reports)
+                {
+                    string title = item.HeaderTitle;
+                    string subtitle = item.HasValue("headerSubtitle")? item.HeaderSubtitle : "";
+                    string imageUrl = item.HasValue("mainImage") ? item.Value<IPublishedContent>("mainImage").GetCropUrl(500, 240) : "/img/carousel.jpg";
+                    string link = item.Url();
+
+
+                    <div class="carousel-item @(slideCount == 0 ? "active" : "")">
+                        <a href="@link">
+                            <img src="@(imageUrl)" alt="carousel image">
+
+                            <div class="carousel-caption">
+                                <h3>
+                                 @title                            </h3>
+                            <p>@subtitle</p>
+                        </div>
+                            </a>
+                    </div>
+                    slideCount++;
+                }
+            }
+        </div>
+        <div>
+            <a class="left carousel-control-prev" href="#@carouselID" role="button" data-slide="prev"><i class="carousel-control-prev-icon"></i><span class="sr-only">Previous</span></a>
+            <a class="right carousel-control-next" href="#@carouselID" role="button" data-slide="next"><i class="carousel-control-next-icon"></i><span class="sr-only">Next</span></a>
+        </div>
+        @*<ol class="carousel-indicators">
+                @for (int i = 0; i < slideCount; i++)
+                {
+                    <li data-target="#@carouselID" data-slide-to="@i" class="@(i == 0 ? "active" : null)"></li>
+                }
+            </ol>*@
+    </div>
+}

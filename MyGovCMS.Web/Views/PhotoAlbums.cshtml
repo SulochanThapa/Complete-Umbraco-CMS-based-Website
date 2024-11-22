@@ -1,0 +1,56 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.PhotoAlbumList>
+@using MyGovCMS.Core.Extensions
+@{
+    Layout = "Master.cshtml";
+}
+
+
+
+<div id="core" class="mt-10">
+    <div class="c-container">
+        <div class="row">
+            <div class="middle-column col-md-6 col-md-push-3">
+                <div id="page-header" class="m-has-breadcrumbs">
+                    <div class="page-title">
+                        <h1> @Model.Name</h1>
+                    </div>
+                    <div class="breadcrumbs">
+                        <ul>
+                            <li class="home"><a href="@Model.Parent.Url()">@Model.Parent.Name</a></li>
+                            <li> @Model.Name</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="page-content">
+                    <div class="page-content-inner">
+                        @Html.Partial("~/Views/Partials/latestPhotoAlbums.cshtml")
+                    </div>
+                </div>
+                <hr class="c-separator m-margin-top-small m-margin-bottom-small m-transparent hidden-lg hidden-md">
+            </div>
+            <div class="left-column col-md-3 col-md-pull-6">
+                @Html.Partial("~/Views/Partials/pvNavigation.cshtml")
+                <aside class="sidebar">
+                    <div class="widget-list">
+                        @Html.Partial("~/Views/Partials/pvWidgetCirculars.cshtml")
+                        @Html.Partial("~/Views/Partials/pvLocalInfo.cshtml")
+                        @Html.Partial("~/Views/Partials/pvFeaturedGallery.cshtml")
+                    </div>
+                </aside>
+            </div>
+            <div class="right-column col-md-3">
+                <aside class="sidebar">
+                    <div class="profiles">
+                        @Html.Partial("~/Views/Partials/pvProfiles.cshtml")
+                    </div>
+                    <div class="widget-list">
+                        @Html.Partial("~/Views/Partials/pvWidgetNewsEvents.cshtml")
+                        @Html.Partial("~/Views/Partials/pvWidgetAnnualReports.cshtml")
+                        @Html.Partial("~/Views/Partials/pvUsefulLinks.cshtml")
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,312 @@
+﻿/* -----------------------------------------------------------------------------
+
+    This file should be used to add your own CSS definitions or override
+	the existing ones.
+
+----------------------------------------------------------------------------- */
+
+/* FONT */
+/* body { font-family: 'insert-font-family-name-here', 'Arial', sans-serif; } */
+
+/* STANDARD LOGO DIMENSIONS */
+.header-branding img {
+    width: 240px;
+}
+
+/* LARGE LOGO DIMENSIONS */
+.header-branding.m-large-logo img {
+    width: 300px;
+}
+/* Scroll down to "MEDIUM DEVICES" to change width of large logo on mobile devices */
+
+/* your CSS here */
+.rightLinks {
+    display: block;
+}
+
+.header-swachbharat-logo {
+    position: relative;
+    float: right;
+    padding: 10px 0;
+    margin: 0;
+    -webkit-transition: margin 300ms ease-in-out;
+    -moz-transition: margin 300ms ease-in-out;
+    -ms-transition: margin 300ms ease-in-out;
+    -o-transition: margin 300ms ease-in-out;
+    transition: margin 300ms ease-in-out;
+}
+
+.topStrip {
+    border-bottom: none;
+    line-height: 26px;
+    background: #f5f4f4;
+    max-height: 38px;
+    color: #444;
+}
+
+    .topStrip ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+.leftLink {
+    float: left;
+}
+
+.topStrip li:first-child {
+    padding-left: 0;
+}
+
+.topStrip .rightLinks li:first-child {
+    padding-left: 0px;
+}
+
+.topStrip li {
+    float: left;
+    position: relative;
+    font-size: 0.929em;
+    margin-top: 0;
+}
+
+.topStrip a {
+    color: #3d3d3d;
+    text-decoration: none;
+    padding: 6px 8px;
+    display: block;
+}
+
+.govtMyGov {
+    padding: 2px 0 2px 13px;
+    padding-left: 13px;
+}
+.border-left-none{
+    border-left:none !important;
+}
+.pl-0{
+    padding-left:0 !important;
+}
+    .govtMyGov img {
+        margin: 0 5px 0 0;
+        vertical-align: middle;
+    }
+
+/*#logoBar {
+    background: #192b62;
+    background: #ec5237;
+    background-image: url(/assets/images/flag_bg.png);
+}*/
+.mt-10 {
+    margin-top: 10px;
+}
+
+.rightLinks {
+    float: right;
+}
+
+.cf::after, .container::after, .row::after, ul::after, .boxs::after, .radioList::after {
+    clear: both;
+}
+
+.cf::before, .cf::after, .container::before, .container::after, .row::before, .row::after, ul::before, ul::after, .boxs::before, .boxs::after, .radioList::after, .radioList::before {
+    content: " ";
+    display: table;
+}
+
+.header-img-bg {
+    position: absolute;
+    left: 15%;
+    height: 89px;
+}
+
+.team-member-inner .member-name, .member-role {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.3em;
+    font-weight: 400;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+/*#owl-demo .owl-item {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+}
+
+
+#owl-demo .item img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+}*/
+
+.document-page .events-widget ul > li {
+    border-color: #f0f0f0
+}
+
+.document-page .events-widget .event-month {
+    color: #FFF;
+    background-color: #e3480b;
+}
+
+.document-page .events-widget .event-day {
+    color: #333;
+    background-color: #e5e5e5
+}
+
+
+.rightLinks li:not(:first-child) {
+    border-left: 1px solid #dbd6d6;
+}
+
+.leftLink li:not(:first-child) {
+    border-left: 1px solid #dbd6d6;
+}
+
+.green-bg {
+    background-color: #fff;
+    background-image: url(/assets/images/flag_bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 10px;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.max-h-300 {
+    max-height: 300px;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+}
+
+.documents-widget .published-date {
+    font-size: .857em;
+    white-space: nowrap;
+    color: #9b9595;
+}
+
+.document-page .ico-shadow {
+    position: absolute;
+    font-size: 120px;
+    opacity: 0.08;
+    filter: alpha(opacity=8);
+    z-index: 5;
+}
+
+.grid-section .container .column {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#core {
+    background-image: url(/assets/images/symphony.png);
+}
+
+.sitemap ul li {
+    list-style: none;
+}
+
+    .sitemap ul li::before {
+        content: "✅";
+        display: inline-block;
+        margin-right: 0.2rem;
+    }
+
+.sitemap ul ul li::before {
+    content: "✅";
+}
+
+.sitemap ul ul ul li::before {
+    content: "✅";
+}
+
+/* 
+Newer Syntax:
+
+ul li::marker {
+  content: "✅ ";
+}
+*/
+
+
+/* -----------------------------------------------------------------------------
+
+    RESPONSIVE DEFINITIONS
+
+----------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------
+        LARGE DEVICES
+		devices with width between 992px and 1199px
+    ------------------------------------------------------------------------- */
+@media ( max-width: 1220px ) {
+    /* your CSS here */
+    .header-img-bg {
+        left: 8% !important;
+    }
+}
+
+@media ( max-width: 1199px ) {
+
+    /* your CSS here */
+    .header-img-bg {
+        left: 6% !important;
+    }
+}
+
+/* -------------------------------------------------------------------------
+        MEDIUM DEVICES
+		devices with width between 768px and 991px
+    ------------------------------------------------------------------------- */
+
+@media ( max-width: 991px ) {
+
+    /* LARGE LOGO DIMENSIONS */
+    .header-branding.m-large-logo img {
+        width: 240px;
+    }
+
+    .header-swachbharat-logo, .rightLinks {
+        display: none;
+    }
+
+    .leftLink > .hidden-xs {
+        display: none;
+    }
+    /* your CSS here */
+    .header-img-bg {
+        left: 3% !important;
+    }
+}
+
+/* -------------------------------------------------------------------------
+        SMALL DEVICES
+		devices with width between 481px and 767px
+    ------------------------------------------------------------------------- */
+
+@media ( max-width: 767px ) {
+
+    /* your CSS here */
+    .header-img-bg {
+        left: 1% !important;
+    }
+}
+
+/* -------------------------------------------------------------------------
+        EXTRA SMALL DEVICES
+		devices with width up to 480px
+    ------------------------------------------------------------------------- */
+
+@media ( max-width: 480px ) {
+
+    /* your CSS here */
+    .header-img-bg {
+        left: 0 !important;
+    }
+}

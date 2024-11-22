@@ -1,0 +1,68 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@{
+    var currentNode = Model.Root();
+    var parentModel = currentNode.Descendants<ServicesList>().FirstOrDefault();
+    var servicesParent = currentNode.Children().Where(x => x.Name == "Services").FirstOrDefault();
+    var services = servicesParent.Descendants<RichContent>().ToList();
+    var aboutcompany = currentNode.Descendants<AboutUs>().FirstOrDefault();
+}
+<style type="text/css">
+    .widget .widget-title::before {
+        display: block;
+        height: 5px;
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 10px;
+        top: 0;
+        margin-top: 10px;
+        margin-left: -10px;
+        margin-bottom: 0;
+    }
+</style>
+    <div class="col-lg-3 widget-area flex-">
+        @if (services != null && services.Any())
+        {
+            <aside class="widget widget-nav-menu">
+                <ul class="widget-menu">
+                    @foreach (var service in services)
+                    {
+                        if (service.Id == Model.Id)
+                        {
+                            <li class="active"><a href="@service.Url()">@service.Name</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@service.Url()">@service.Name</a></li>
+                        }
+                    }
+                </ul>
+            </aside>
+        }
+     
+        <aside class="widget widget-text p-2">
+            <h3 class="widget-title">About Us</h3>
+            <div class="ttm-author-widget">
+                <p class="author-widget_text">@aboutcompany.Description</p>
+            </div>
+        </aside>
+
+        <aside class="widget widget_media_image">
+            <div class="banner-img-box ttm-textcolor-white text-left">
+                <div class="featured-content featured-content-banner">
+                    <i class="flaticon flaticon-call"></i>
+                    <div class="featured-title ttm-box-title">
+                        <h5>How Can We Help?</h5>
+                    </div>
+                    <div class="featured-desc">
+                        <p>If you need any help, please<br> feel free to contact us.</p>
+                    </div>
+                    <ul>
+                        @*<li><i class="fa fa-phone"></i>0354 XXXX</li>*@
+                        <li><i class="fa fa-envelope-o"></i><a href="mailto:enquiry@netspeq.com">enquiry@netspeq.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </div>

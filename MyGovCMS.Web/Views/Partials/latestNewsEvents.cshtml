@@ -1,0 +1,114 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@{
+    var currentNode = Model.AncestorOrSelf();
+    var listParent = currentNode.Children().Where(x => x.Name == "News & Events").FirstOrDefault();
+    var reportslist = listParent.Descendants<Reports>().FirstOrDefault();
+    var reports = listParent.Descendants<Reports>().Where(x => x.IsVisible());
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isReportListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = 4;
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfReports = reports.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = reports.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+}
+<div class="text-left">
+    @if (reports != null && reports.Any())
+    {
+
+    <div class="row mb-2">
+        <div class="row">
+            @foreach (var report in pageOfReports)
+            {
+                if (pageOfReports.Count() == 1)
+                {
+                    <div class="col-md-12">
+                        <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                            <div class="card-body d-flex flex-column align-items-start">
+                                <strong class="d-inline-block mb-2 text-primary">News & Events</strong>
+                                <h4 class="mb-0 font-weight-bold">
+                                    <a class="text-dark" href="@report.Url()">
+                                        @if (report.Date.AddDays(7).Date >= DateTime.Today.Date)
+                                        {
+                                            <span class="blink_me text-danger"> New</span>
+                                        }
+                                                                        @(!string.IsNullOrWhiteSpace(report.HeaderTitle) ? report.HeaderTitle : report.Name)
+
+                                                                    </a>
+                                </h4>
+                                <div class="mb-1 text-muted">@report.Date.ToString("MMMM dd, yyyy")</div>
+                                <p class="card-text mb-auto">
+                                    @if (!string.IsNullOrWhiteSpace(report.HeaderSubtitle))
+                                    {
+                                        @report.HeaderSubtitle
+                                    }
+                                </p>
+                                <a href="@report.Url()">Continue reading...</a>
+                            </div>
+                            @if (report.MainImage != null)
+                            {
+                                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="mainimage" style="width: 200px; height: 250px;" src="@report.MainImage.GetCropUrl(200,250)" data-holder-rendered="true">
+                            }
+                            else
+                            {
+
+
+
+
+
+                                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="mainimage" style="width: 200px; height: 250px;" src="~/assets/img/copy.svg" data-holder-rendered="true">
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6">
+                        <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                            <div class="card-body d-flex flex-column align-items-start">
+                                <strong class="d-inline-block mb-2 text-primary">News & Events</strong>
+                                <h4 class="mb-0 font-weight-bold">
+                                    <a class="text-dark" href="@report.Url">
+                                        @(!string.IsNullOrWhiteSpace(report.HeaderTitle) ? report.HeaderTitle : report.Name)
+
+                                    </a>
+                                </h4>
+                                <div class="mb-1 text-muted">@report.Date.ToString("MMMM dd, yyyy")</div>
+                                <p class="card-text mb-auto">
+                                    @if (!string.IsNullOrWhiteSpace(report.HeaderSubtitle))
+                                    {
+                                        @report.HeaderSubtitle
+                                    }
+                                </p>
+                                <a href="@report.Url">Continue reading...</a>
+                            </div>
+                            @if (report.MainImage != null)
+                            {
+                                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="mainimage" style="width: 200px; height: 250px;" src="@report.MainImage.GetCropUrl(200,250)" data-holder-rendered="true">
+                            }
+                            else
+                            {
+
+
+
+
+
+                                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="mainimage" style="width: 200px; height: 250px;" src="~/assets/img/copy.svg" data-holder-rendered="true">
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+        <div id="paging" class="clearfix">
+            <a class="btn btn-sm btn-primary float-right" href="@(listParent.Url)">@Umbraco.GetDictionaryValue("ReportsList.ViewAll") ...</a>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">No record found</div>
+    }
+</div>

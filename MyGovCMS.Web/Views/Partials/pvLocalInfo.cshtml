@@ -1,0 +1,47 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@using MyGovCMS.Core.Helpers
+@{
+
+    var rootNode = Model.Root();
+    var uddministerProfile = rootNode.Children<UDdministerProfile>().FirstOrDefault();
+    var localinfo = rootNode.Children<Info>().FirstOrDefault();
+}
+
+<div class="widget locale-info-widget m-has-bg">
+    <div class="widget-inner">
+        @*<h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-map-marker"></i>Locale Info</h3>*@
+        <div class="widget-content">
+            <ul>
+                <li>
+                    <div class="row-title"><h4>Minister In Charge</h4></div>
+                    <div class="row-value">@uddministerProfile.ProfileName</div>
+                </li>
+                <li>
+                    <div class="row-title"><h4>Secretary</h4></div>
+                    <div class="row-value">@localinfo.SecretaryName</div>
+                </li>
+                <li>
+                    <div class="row-title"><h4>Phone no</h4></div>
+                    <div class="row-value">@localinfo.SecretaryPhoneNo</div>
+                </li>
+                <li>
+                    <div class="row-title"><h4>Alt. Mobile No</h4></div>
+                    <div class="row-value">@localinfo.AlternativeMobileNo</div>
+                </li>
+                <li>
+                    <div class="row-title"><h4>Fax No</h4></div>
+                    <div class="row-value">@localinfo.FaxNo</div>
+                </li>
+                <li>
+                    <div class="row-title"><h4>Email</h4></div>
+                    <div class="row-value">@localinfo.Email</div>
+                </li>
+                <li>
+                    <div class="row-title"><h4>ZIP code</h4></div>
+                    <div class="row-value">737101</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

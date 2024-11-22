@@ -1,0 +1,74 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Extensions
+@{
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var currentNode = Model.Root();
+    var parentModel = currentNode.Descendants<ServicesList>().FirstOrDefault();
+    var servicesParent = currentNode.Children().Where(x => x.Name == "Services").FirstOrDefault();
+
+    var services = servicesParent.Descendants<RichContent>().ToList();
+}
+
+<div class="site-main">
+    <section class="ttm-row history-section bg-img3 ttm-bgcolor-grey ttm-bg ttm-bgimage-yes clearfix">
+        <div class="ttm-row-wrapper-bg-layer ttm-bg-layer"></div>
+        <div class="container">
+            <div class="row">
+                <!-- row -->
+                <div class="col-lg-8 offset-lg-2">
+                    <!-- section title -->
+                    <div class="section-title with-desc text-center clearfix">
+                        <div class="title-header">
+                            <h5>
+                                @parentModel.HeaderTitle
+                            </h5>
+                            <h2 class="title">@parentModel.HeaderSubTitle</h2>
+                        </div>
+                    </div><!-- section title end -->
+                </div>
+            </div>
+            <!-- row end -->
+            <!-- row -->
+            <div class="row">
+            @if(services != null && services.Any())
+            { 
+                <div class="history-slide owl-carousel" data-item="4" data-nav="false" data-dots="false" data-auto="true">
+                    @foreach (var service in services)
+                    {
+                        <div class="ttm-history-box-wrapper">
+                            <!-- ttm-history-box-wrapper  -->
+                            <div class="ttm-history-box-icon-wrapper">
+                                <!-- ttm-history-box-icon-wrapper  -->
+                                <!--  featured-icon-box -->
+                                <div class="featured-icon-box">
+                                    <div class="featured-icon">
+                                        <!--  featured-icon -->
+                                        <div class="ttm-icon ttm-icon_element-bgcolor-white ttm-icon_element-size-md">
+                                            <i class="@service.IconName"></i><!--  ttm-icon -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ttm-history-box-border"></div><!-- ttm-history-box-border  -->
+                            <div class="ttm-history-box-details">
+                                <div class="ttm-historybox-title"><h5>@service.HeaderTitle</h5></div><!-- historybox-title  -->
+                                <div class="ttm-historybox-description">
+                                    @service.HeaderSubTitle
+                                    
+                                </div>
+                                <a class="ttm-btn ttm-btn-size-sm ttm-btn-color-skincolor btn-inline ttm-icon-btn-right mt-20" href="@service.Url()">Read More <i class="ti ti-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    }
+
+                    </div>
+            }
+            </div><!-- row end-->
+            <div class="row">
+                <div class="col-md-12 text-center mt-45 res-991-mt-30">
+                    <p class="mb-0">Don’t hesitate, contact us for better help and services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

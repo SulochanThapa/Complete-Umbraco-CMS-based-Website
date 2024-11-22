@@ -1,0 +1,40 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.ReportsList>
+    @using MyGovCMS.Core.Extensions
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+}
+
+@* the fun starts here *@
+
+
+
+@* the fun starts here *@
+<div class="ttm-page-title-row">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-box text-center">
+                    <div class="page-title-heading">
+                        <h1 class="title">
+                            @Model.Name
+                        </h1>
+
+                    </div><!-- /.page-title-captions -->
+                    <div class="breadcrumb-wrapper">
+                        <span>
+                            <a title="Homepage" href="@Model.Root().Url()"><i class="ti ti-home"></i>&nbsp;&nbsp;Home</a>
+                        </span>
+                        <span class="ttm-bread-sep">&nbsp; : : &nbsp;</span><span> @Model.Name</span>
+                    </div>
+                </div>
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- page-title end-->
+<div class="site-main">
+        @Html.GetGridHtml(Model, "mainContent", "Bootstrap3", fluidImages: true)
+    @Html.Partial("~/Views/Partials/pvProducts.cshtml")
+</div>
+
+

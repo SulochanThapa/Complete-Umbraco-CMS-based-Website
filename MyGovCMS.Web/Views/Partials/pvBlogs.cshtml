@@ -1,0 +1,104 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Extensions
+@using MyGovCMS.Core.Helpers
+@{
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var currentNode = Model.Root();
+    var parentModel = currentNode.Descendants<ReportsList>().FirstOrDefault();
+    var productsParent = currentNode.Children().Where(x => x.Name == "Blogs").FirstOrDefault();
+    var products = productsParent.Descendants<RichContent>().ToList();
+    var dataitemcount = products.Count();
+    //var isReportListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = 10;
+
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfReports = products.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = products.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+}
+
+<section class="ttm-row blog-section clearfix">
+    <div class="container">
+        <div class="row">
+            @if (products != null && products.Any())
+            {
+                <div class="blog-slide owl-carousel owl-theme owl-loaded " data-item="@dataitemcount" data-nav="false" data-dots="false" data-auto="false">
+                    @*<div class="row portfolio-slide owl-carousel ttm-boxes-spacing-10px" data-item="" data-nav="false" data-dots="false" data-auto="false">*@
+                    @foreach (var product in products)
+                    {
+                        <div class="featured-imagebox featured-imagebox-blog">
+                            <div class="featured-thumbnail">
+                                <!-- featured-thumbnail -->
+                                @if (product.MainImage != null)
+                                {
+                                    <img class="img-fluid lazyload" data-src="@product.MainImage.GetCropUrl(654, 490)" src="@product.MainImage.GetCropUrl(654, 490)" alt="image">
+                                }
+                                else
+                                {
+                                    <img class="img-fluid lazyload" data-src="/content/images/blog/04.jpg" src="/content/images/blog/04.jpg" alt="image">
+                                }
+                                <div class="ttm-blog-overlay-iconbox">
+                                    <a href="@product.Url()"><i class="ti ti-plus"></i></a>
+                                </div>
+                                <div class="ttm-box-view-overlay"></div>
+                            </div>
+                            <div class="featured-content">
+                                <!-- featured-content -->
+                                <div class="ttm-box-post-date">
+                                    <!-- ttm-box-post-date -->
+                                    <span class="ttm-entry-date">
+                                        <time class="entry-date" datetime="2019-01-16T07:07:55+00:00">@product.CreateDate.ToString("dd")</time><time><span class="entry-month entry-year"></span></time>
+                                    </span>
+                                </div>
+                                <div class="featured-title">
+                                    <!-- featured-title -->
+                                    <h5><a href="@product.Url()">@product.HeaderTitle</a></h5>
+                                </div>
+                                <div class="featured-desc">
+                                    <!-- featured-description -->
+                                    <p>@product.HeaderSubTitle</p>
+                                </div>
+                                <a class="ttm-btn ttm-btn-size-sm ttm-btn-color-skincolor btn-inline ttm-icon-btn-right mt-20" href="@product.Url()">Read More <i class="ti ti-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                      
+                    }
+                </div>
+                <div id="paging" class="clearfix">
+
+                    @if (pageCount > 1)
+                    {
+                        <div class="paging-block">
+                            @if (pageNumber > 1)
+                            {
+                                { pageNumber = pageNumber - 1; }
+                                <a class="btn btn-primary float-left mt-3" href="@currentNode.Url()?page=@pageNumber&size=@pageSize">Prev</a>
+                            }
+                            else
+                            {
+                                @Html.Raw("&nbsp;")
+                            }
+                        </div>
+                        <div class="paging-block text-center">
+                            <span>Page @pageNumber of @pageCount</span>
+                        </div>
+                        <div class="paging-block">
+                            @if (pageNumber < pageCount)
+                            {
+                                { pageNumber = pageNumber + 1; }
+                                <a class="btn btn-primary float-right" href="@currentNode.Url()?page=@pageNumber&size=@pageSize">Next</a>
+                            }
+                            else
+                            {
+                                @Html.Raw("&nbsp;")
+                            }
+                        </div>
+
+                    }
+
+                </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.Home>
+@{
+    var currentNode = Model.AncestorOrSelf();
+    var banners = currentNode.Descendants<Banner>().FirstOrDefault();
+}
+<div id="owl-demo" class="owl-carousel owl-theme">
+    @if (@banners.HeroHomeBanner != null && @banners.HeroHomeBanner.Any())
+    {
+        foreach (var banner in @banners.HeroHomeBanner)
+        {
+            <div class="item"><img src="@banner.GetCropUrl(2000,1200)" alt="banner image"></div>
+        }
+    }
+</div>

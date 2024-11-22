@@ -1,0 +1,51 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@{
+    var photoAlbums = Model.Descendants<PhotoAlbum>().Where(x => x.IsVisible()).OrderByDescending(y => y.CreateDate);
+
+}
+@if (photoAlbums.Count() < 2)
+{
+    foreach (var album in photoAlbums)
+    {
+        if (album.HasValue("photosFolder"))
+        {
+
+            foreach (var image in album.Value<IPublishedContent>("photosFolder").Children().Take(5))
+            {
+                <div class="col-lg-3 col-md-4">
+                    <div class="gallery-item">
+                        <a href="@image.Url()" class="venobox vbox-item" data-gall="gallery-item">
+                            <img src="@image.GetCropUrl(372,216)" alt="" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+            }
+
+        }
+
+    }
+}
+else
+{
+    foreach (var album in photoAlbums)
+    {
+        if (album.HasValue("photosFolder"))
+        {
+
+            foreach (var image in album.Value<IPublishedContent>("photosFolder").Children().Take(2))
+            {
+                <div class="col-lg-3 col-md-4">
+                    <div class="gallery-item">
+                        <a href="@image.Url()" class="venobox vbox-item" data-gall="gallery-item">
+                            <img src="@image.GetCropUrl(372,216)" alt="" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+            }
+
+        }
+
+    }
+}
+

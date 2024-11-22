@@ -1,0 +1,48 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@using MyGovCMS.Core.Helpers
+@{
+
+    var currentNode = Model.Root();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var newseventslists = currentNode.Descendants<NewsAndEventsList>().FirstOrDefault();
+    var newsevents = currentNode.Descendants<NewsEvents>().Where(x => x.IsVisible()).OrderByDescending(y => y.Date);
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isNewsEventListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize =  5;
+    var pageNumber = 1;
+    var pageSize = 5;
+    var pageOfReports = newsevents.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = newsevents.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+    var pageNo = pageNumber;
+}
+
+
+    <div class="widget events-widget">
+        <div class="widget-inner">
+            <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-calendar-full"></i>News & Events</h3>
+            <div class="widget-content">
+                @if (newsevents != null && newsevents.Any())
+                {
+                    <ul class="event-list">
+                        @foreach (var report in pageOfReports)
+                        {
+                            <li class="event m-has-date">
+                                <div class="event-inner">
+                                    <div class="event-date" title="@report.Date.ToString("MMMM dd,yyyy")">
+                                        <span class="event-month">@report.Date.ToString("MMM")</span>
+                                        <span class="event-day">@report.Date.ToString("dd")</span>
+                                    </div>
+                                    <h4 class="event-title"><a href="@report.Url()">@report.HeaderTitle</a></h4>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                <p class="show-all-btn"><a href="@(newseventslists.Url())">See All News & Events</a></p>
+            </div>
+        </div>
+    </div>
+    
+

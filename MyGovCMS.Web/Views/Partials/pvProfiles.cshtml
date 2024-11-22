@@ -1,0 +1,75 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Extensions
+@{
+    var rootNode = Model.Root();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var governorProfile = rootNode.Children<GovernorProfile>().FirstOrDefault();
+    var cmProfile = rootNode.Children<ChiefMinisterProfile>().FirstOrDefault();
+    var uddministerProfile = rootNode.Children<UDdministerProfile>().FirstOrDefault();
+}
+<div class="c-team-member m-has-portrait">
+    <div class="c-content-box">
+        <div class="team-member-inner">
+            <div class="member-portrait">
+                <img src="@governorProfile.ProfileImage" alt="@governorProfile.ProfileName image">
+            </div>
+            <h3 class="member-name">@governorProfile.ProfileName</h3>
+            <h4 class="member-role">@governorProfile.Designation</h4>
+            @*<div class="member-description">
+                <p>
+                    Phone: (123) 456-7890<br>
+                    Email: <a href="#">clerk@townpress.gov</a>
+                </p>
+            </div>*@
+            <!-- You can uncomment this block to show social icons for this member
+            <ul class="member-social">
+                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            </ul-->
+        </div>
+    </div>
+</div>
+<div class="c-team-member m-has-portrait">
+    <div class="c-content-box">
+        <div class="team-member-inner">
+            <div class="member-portrait">
+                <img src="@cmProfile.ProfileImage" alt="@cmProfile.ProfileName image">
+            </div>
+            <h3 class="member-name">@cmProfile.ProfileName</h3>
+            <h4 class="member-role">@cmProfile.Designation </h4>
+            @*<div class="member-description">
+                    <p>
+                        Phone: (123) 456-7890<br>
+                        Email: <a href="#">clerk@townpress.gov</a>
+                    </p>
+                </div>*@
+            <!-- You can uncomment this block to show social icons for this member
+            <ul class="member-social">
+                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            </ul-->
+        </div>
+    </div>
+</div>
+<div class="c-team-member m-has-portrait">
+    <div class="c-content-box">
+        <div class="team-member-inner">
+            <div class="member-portrait">
+                <img src="@uddministerProfile.ProfileImage" alt="@uddministerProfile.ProfileName image">
+            </div>
+            <h3 class="member-name">@uddministerProfile.ProfileName</h3>
+            <h4 class="member-role">@uddministerProfile.Designation </h4>
+            @*<div class="member-description">
+            <p>
+                Phone: (123) 456-7890<br>
+                Email: <a href="#">clerk@townpress.gov</a>
+            </p>
+        </div>*@
+            <!-- You can uncomment this block to show social icons for this member
+    <ul class="member-social">
+        <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+    </ul-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@using MyGovCMS.Core.Extensions
+@{
+    var currentNode = Model.Root();
+    var contentParent = currentNode.Children().Where(x => x.Name == Model.Name).FirstOrDefault();
+    var contentlist = contentParent.Descendants<UrbanLocalCenter>().ToList();
+    var dataitemcount = contentlist.Count();
+    var fallbackPageSize = 10;
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfReports = contentlist.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = contentlist.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+    var pageNo = pageNumber;
+}
+
+@if (contentlist != null && contentlist.Any())
+{
+    <div class="c-post-list m-has-icon">
+        <div class="c-content-box">
+            <div class="post-list-inner">
+                @*<i class="ico-shadow tp tp-reading"></i>*@
+                <div class="post-list-content">
+                    @foreach (var item in pageOfReports)
+                    {
+                        <article class="post">
+                            <h3 class="post-title">
+                                <a href="@item.Url()" target="_blank">@item.HeaderTitle</a>
+                            </h3>
+                            <p>@item.HeaderSubtitle</p>
+                            <div class="post-date">@item.CreateDate.ToString("MMMM dd, yyyy")</div>
+                        </article>
+                    }
+                </div>
+                @if (pageCount > 1)
+                {
+                <div class="text-right">Showing @pageSize per page</div>
+                <div class="c-pagination">
+
+                    <ul>
+                        <li>
+                            @if (pageNumber > 1)
+                            {
+                                { pageNo = pageNumber - 1; }
+                                <a class="btn btn-primary float-left" href="@currentNode.Url()?page=@pageNo&size=@pageSize"><i class="fa fa-arrow-left"></i> Prev</a>
+                            }
+                            else
+                            {
+                                <span class="disabled">Prev</span>
+                            }
+                        </li>
+                        <li> <span class="text-primary">Page @pageNumber of @pageCount</span></li>
+                        <li>
+                            @if (pageNumber < pageCount)
+                            {
+                                { pageNo = pageNumber + 1; }
+                                <a class="btn btn-primary float-right" href="@currentNode.Url()?page=@pageNo &size=@pageSize">Next <i class="fa fa-arrow-right"></i></a>
+                            }
+                            else
+                            {
+                                <span class="disabled">Next</span>
+                            }
+                        </li>
+                    </ul>
+                </div>
+
+                }
+            </div>
+        </div>
+    </div>
+}

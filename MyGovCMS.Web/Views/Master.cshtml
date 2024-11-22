@@ -1,0 +1,159 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using ClientDependency.Core.Mvc
+@{
+    Layout = null;
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    Html.RequiresCss("/assets/library/css/cus-style.css");
+    Html.RequiresCss("/assets/library/css/skin/blue.css");
+    Html.RequiresCss("/assets/library/css/custom.css");
+    Html.RequiresCss("/assets/library/css/owl.carousel.css");
+    Html.RequiresCss("/assets/library/css/owl.theme.default.css");
+    Html.RequiresJs("/scripts/jquery-3.6.0.js");
+    Html.RequiresJs("/assets/library/js/third-party.js");
+    Html.RequiresJs("/assets/library/js/library.js");
+    Html.RequiresJs("/assets/library/js/scripts.js");
+    Html.RequiresJs("/assets/library/js/font-resizer.js");
+    Html.RequiresJs("/assets/library/js/high-contrast.js");
+}
+  @{ 
+      int nodeId = Model.Root().Id;
+      string cookieName = String.Format("PageView_{0}", nodeId);
+      if (Session[cookieName] == null)
+      {
+          Reflections.UmbracoUtilities.PageViewCounter.SetPageViewCount(nodeId);
+          Session[cookieName] = 1;
+      }
+  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>My Umbraco Website(Urban) MyGov</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link rel="shortcut icon" href="~/assets/images/favicon.png">
+    @Html.RenderCssHere()
+</head>
+<body>
+    <!-- HEADER : begin -->
+    <!-- If you want to use Standard Header Menu, add "m-has-standard-menu" class to the following element (see home-2.html template for example)
+    Remove "m-has-gmap" class if you are not using Google Map in this template -->
+
+    <header id="header" class="m-has-header-tools">
+        <div class="topStrip cf">
+            <div class="c-container">
+                <ul class="leftLink">
+                    <li class="govtMyGov"><img src="~/assets/images/favicon.png" alt="India Flag" width="33" height="22"><span></span></li>
+                    <li class="border-left-none"><a href="/" class="pl-0">Government of MyGov</a></li>
+                    <li class="hidden-xs"><a href="/"><i class="tp tp-home"></i> Home</a></li>
+                    <li class="hidden-xs"><a href="/contact-us"><i class="tp tp-contacts"></i> Contact Us</a></li>
+                </ul>
+                <ul class="rightLinks">
+                    <li><a class="skipContent" href="#core" tabindex="1">Skip to Main Content</a></li>
+                    <li>
+                        <a href="javascript:void(0);" title="Decrease font size" onclick="set_font_size('decrease')">-A</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" title="Reset font size" onclick="set_font_size('')">A</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" title="Increase font size" onclick="set_font_size('increase')">+A</a>
+                    </li>
+                       <li>
+                                            <a title="Normal Contrast" class="high-contrast light" href="javascript:void(0);"><img src="~/assets/images/normal-contrast.png" /></a>
+                                            <a title="High Contrast" class="high-contrast dark" href="javascript:void(0);" style="display: none"><img src="~/assets/images/high-contrast.png" /></a>
+                                    </li>
+                    <li><a href="/screen-reader-access">Screen Reader Access</a></li>
+                    <li><a href="/sbm"><i class="tp tp-man-woman"></i> Admin Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="header-inner">
+            <div class="header-content">
+                <div class="c-container logoBar" id="logoBar">
+                    <div class="header-content-inner">
+                        <span class="">
+                            <img src="~/assets/images/flag-mark.png" class="img-fluid header-img-bg" />
+                        </span>
+                        <div class="header-branding m-large-logo">
+                            <a href="/">
+                                <span>
+                                    <img src="~/assets/images/header-logo.png"
+                                         data-hires="~/assets/images/header-logo.2x.png"
+                                         alt="My Umbraco Website(Urban) MyGov">
+                                </span>
+                            </a>
+                        </div>
+                        <div class="header-toggle-holder">
+                            <button type="button" class="header-toggle">
+                                <i class="ico-open tp tp-menu"></i>
+                                <i class="ico-close tp tp-cross"></i>
+                                <span>Menu</span>
+                            </button>
+                            @*<button type="button" class="header-gmap-switcher" title="Show on Map">
+                                    <i class="ico-open tp tp-map2"></i>
+                                    <i class="ico-close tp tp-cross"></i>
+                                </button>*@
+                            <!-- HEADER GMAP SWITCHER : end -->
+                        </div>
+                        <!-- This menu is used as both mobile menu (displayed on devices with screen width < 991px)
+                        and standard header menu (only if Header element has "m-has-standard-menu" class) -->
+                        @Html.Partial("~/Views/Partials/pvMobileNavigation.cshtml")
+
+                        <div class="header-swachbharat-logo">
+                            <span>
+                                <img src="~/assets/images/swachBharatLogo.png"
+                                     data-hires="~/assets/images/swachBharatLogo.png"
+                                     alt="My Umbraco Website">
+                            </span>
+                        </div>
+                        <div class="header-tools">
+                            <div class="header-search">
+                                @*<form method="get" action="" class="c-search-form">
+                                        <div class="form-fields">
+                                            <input type="text" value="" placeholder="Search this site..." name="s">
+                                            <button type="submit" class="submit-btn"><i class="tp tp-magnifier"></i></button>
+                                        </div>
+                                    </form>*@
+                            </div>
+                            <!-- HEADER SEARCH : end -->
+                            <!-- HEADER GMAP SWITCHER : begin -->
+                            <!-- Remove following block if you are not using Google Map in this template -->
+                            @*<button type="button" class="header-gmap-switcher" title="Show on Map">
+                                    <i class="ico-open tp tp-map2"></i>
+                                    <i class="ico-close tp tp-cross"></i>
+                                    <span>Map</span>
+                                </button>*@
+                            <!-- HEADER GMAP SWITCHER : end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <div class="header-bg">
+        <div class="header-image" data-autoplay="8">
+            @*<div class="image-layer" style="background-image: url('/assets/images/header-05.jpg' );"></div>*@
+            <!-- div class="image-layer" style="background-image: url( 'images/header-05.jpg' );"></div -->
+        </div>
+    </div>
+        @RenderBody()
+    @Html.Partial("~/Views/Partials/pvFooter.cshtml")
+    @Html.RenderJsHere()
+    <script>
+        $(document).ready(function () {
+            $("#owl-demo").owlCarousel({
+                items: 1,
+                slideSpeed: 2000,
+                nav: true,
+                autoplay: true,
+                dots: true,
+                loop: true,
+                responsiveRefreshRate: 200,
+            });
+        });
+    </script>
+</body>
+</html>

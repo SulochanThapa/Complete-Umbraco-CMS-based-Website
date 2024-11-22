@@ -1,0 +1,65 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Search>
+@using Current = Umbraco.Web.Composing.Current;
+@{
+    Layout = "master.cshtml";
+    var searchQuery = Request.QueryString["q"];
+}
+
+
+<main id="main">
+    <section id="search" class="mt-5">
+        <div class="container mt-5">
+            <form action="@Model.Url()" method="GET" id="search">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="form-group controls">
+                            <input type="text" class="form-control col-xs-6" placeholder="@Umbraco.GetDictionaryValue("Search.Placeholder")" name="q" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="form-group">
+                            <button class="btn btn-primary search-button">@Umbraco.GetDictionaryValue("Search.ButtonText") <i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        @if (!string.IsNullOrWhiteSpace(searchQuery))
+                        {
+                            var results = Current.PublishedContentQuery.Search(searchQuery, string.Empty);
+                            long resultCount = results != null && results.Any() ? results.Count() : 0;
+                            <p>@Html.Raw(string.Format(Umbraco.GetDictionaryValue("Search.ResultsText"), searchQuery, resultCount, resultCount == 1 ? null : "s"))</p>
+
+                            if (resultCount > 0)
+                            {
+                                foreach (var result in results)
+                                {
+                                    var title = result.Content.Value<string>("headerTitle");
+                                    var subtitle = result.Content.Value<string>("headerSubtitle");
+                                    var createDate = result.Content.Value<DateTime>("createDate");
+
+                                    <div class="post-preview">
+                                        <a href="@result.Content.Url()">
+                                            <h2 class="post-title">
+                                                @(!string.IsNullOrWhiteSpace(title) ? title : result.Content.Name)
+                                            </h2>
+                                            @if (!string.IsNullOrWhiteSpace(subtitle))
+                                            {
+                                                <h3 class="post-subtitle">@subtitle</h3>
+                                            }
+                                        </a>
+                                        @if (createDate != DateTime.MinValue)
+                                        {
+                                            <p class="post-meta">
+                                                Posted on @createDate.ToString("MMMM dd, yyyy")
+                                            </p>
+                                        }
+                                    </div>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    </main>

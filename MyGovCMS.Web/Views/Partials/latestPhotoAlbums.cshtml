@@ -1,0 +1,97 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@{
+    var currentNode = Model.AncestorOrSelf();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var albumlist = currentNode.Descendants<PhotoAlbum>().FirstOrDefault();
+    var albums = currentNode.Descendants<PhotoAlbum>().Where(x => x.IsVisible()).OrderByDescending(y => y.CreateDate);
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isAlbumListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = isAlbumListPage ? 10 : 5;
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfAlbums = albums.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = albums.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+    var pageNo = pageNumber;
+}
+
+@if (albums != null && albums.Any())
+{
+
+    <!-- GALLERY LIST PAGE : begin -->
+    <div class="gallery-list-page gallery-page">
+        <div class="c-gallery">
+
+            <!-- You can change the number of columns by changing "m-3-columns" class
+            in the following element to m-2-columns | m-4-columns | m-5-columns : begin -->
+            <ul class="gallery-images m-layout-masonry m-3-columns">
+                @foreach (var album in pageOfAlbums)
+                {
+                    <li class="gallery-image">
+                        <div class="gallery-image-inner">
+                            <a href="@album.Url()">
+                                @if (album.AlbumCover != null)
+                                {
+                                    <img src="@album.AlbumCover.Url()" alt="">
+
+                                }
+                                else
+                                {
+                                    <img src="images/gallery-09.jpg" alt="">
+                                }
+                            </a>
+                            <h2 class="gallery-title"><a href="@album.Url()">@(!string.IsNullOrWhiteSpace(album.AlbumTitle) ? album.AlbumTitle : album.Name)</a></h2>
+                        </div>
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+    if (isAlbumListPage)
+    {
+        if (pageCount > 1)
+        {
+            <div class="text-right">Showing @pageSize per page</div>
+            <div class="c-pagination">
+
+                <ul>
+                    <li>
+                        @if (pageNumber > 1)
+                        {
+                            { pageNo = pageNumber - 1; }
+                            <a class="btn btn-primary float-left" href="@currentNode.Url()?page=@pageNo&size=@pageSize"><i class="fa fa-arrow-left"></i> Prev</a>
+                        }
+                        else
+                        {
+                            <span class="disabled">Prev</span>
+                        }
+                    </li>
+                    <li> <span class="text-primary">Page @pageNumber of @pageCount</span></li>
+                    <li>
+                        @if (pageNumber < pageCount)
+                        {
+                            { pageNo = pageNumber + 1; }
+                            <a class="btn btn-primary float-right" href="@currentNode.Url()?page=@pageNo &size=@pageSize">Next <i class="fa fa-arrow-right"></i></a>
+                        }
+                        else
+                        {
+                            <span class="disabled">Next</span>
+                        }
+                    </li>
+                </ul>
+            </div>
+
+        }
+    }
+    else
+    {
+        <a class="btn btn-primary float-right" href="@(currentNode.Url())">@Umbraco.GetDictionaryValue("ReportsList.ViewAll")</a>
+    }
+
+
+}
+
+
+

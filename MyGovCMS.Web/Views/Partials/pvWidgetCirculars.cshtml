@@ -1,0 +1,101 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@using MyGovCMS.Core.Helpers
+@{
+
+    var currentNode = Model.Root();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var circularlists = currentNode.Descendants<CircularList>().FirstOrDefault();
+    var circulars = currentNode.Descendants<Circulars>().Where(x => x.IsVisible()).OrderByDescending(y => y.Date);
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isCircularListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = isCircularListPage ? 10 : 5;
+    var pageNumber = 1;
+    var pageSize = 5;
+    var pageOfReports = circulars.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = circulars.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+
+}
+
+
+<div class="widget documents-widget">
+    <div class="widget-inner">
+        <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-papers"></i>Circulars</h3>
+        <div class="widget-content">
+            @if (circulars != null && circulars.Any())
+            {
+                <ul class="document-list m-has-icons">
+                    @foreach (var report in pageOfReports)
+                    {
+                        <!-- DOCUMENT : begin -->
+                        <li class="document">
+                            <div class="document-inner">
+                                @if (report.HasProperty("UploadFile"))
+                                {
+                                    if (report.HasValue("UploadFile"))
+                                    {
+                                        string filetype = "";
+                                        if (@report.UploadFile.Url().Contains(".pdf"))
+                                        {
+                                            filetype = ".pdf";
+                                        }
+                                        else if (@report.UploadFile.Url().Contains(".doc"))
+                                        {
+                                            filetype = ".doc";
+                                        }
+                                        else if (@report.UploadFile.Url().Contains(".xls"))
+                                        {
+                                            filetype = ".xls";
+                                        }
+                                        else if (@report.UploadFile.Url().Contains(".jpg"))
+                                        {
+                                            filetype = ".jpg";
+                                        }
+                                        else if (@report.UploadFile.Url().Contains(".jpeg"))
+                                        {
+                                            filetype = ".jpg";
+                                        }
+                                        else if (@report.UploadFile.Url().Contains(".png"))
+                                        {
+                                            filetype = ".png";
+                                        }
+
+                                        if (filetype == ".pdf")
+                                        {
+                                            <div class="document-icon" title="PDF File"><i class="fa fa-file-pdf-o"></i></div>
+                                        }
+                                        else if (filetype == ".doc" || filetype == ".docx")
+                                        {
+                                            <div class="document-icon" title="Doc File"><i class="fa fa-file-word-o"></i></div>
+                                        }
+                                        else if (filetype == ".xls" || filetype == ".csv" || filetype == ".xlsx")
+                                        {
+                                            <div class="document-icon" title="xls File"><i class="fa fa-file-excel-o"></i></div>
+                                        }
+                                        else if (filetype == ".jpg" || filetype == ".jpeg" || filetype == ".png")
+                                        {
+                                            <div class="document-icon" title="image File"><i class="fa fa-file-image-o"></i></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="document-icon" title="image File"><i class="fa fa-file-image-o"></i></div>
+                                        }
+
+                                        <h4 class="document-title">
+                                            <a href="@report.UploadFile.Url()" target="_blank">@report.HeaderTitle</a>
+                                            <span class="published-date pull-right">@report.Date.ToString("MMM dd, yyyy")</span>
+                                        </h4>
+                                    }
+
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <p class="show-all-btn"><a href="@circularlists.Url()">See All Circulars</a></p>
+            }
+        </div>
+
+    </div>
+</div>

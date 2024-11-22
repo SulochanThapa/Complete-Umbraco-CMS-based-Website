@@ -1,0 +1,35 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Extensions
+@{
+    var currentNode = Model.AncestorOrSelf();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var aboutSbm = currentNode.Descendants<AboutSbm>().FirstOrDefault();
+}
+
+<div class="c-post-list m-has-icon">
+    <div class="c-content-box">
+        <div class="post-list-inner">
+            <i class="ico-shadow tp tp-reading"></i>
+            <h2 class="post-list-title"><i class="ico tp tp-reading"></i><a href="/about-sbm">About <strong>SBM</strong></a></h2>
+            <div class="post-list-content">
+                <!-- FEATURED POST : begin -->
+                <article class="featured-post m-has-thumb">
+                    <div class="post-image">
+                        <a href="/about-sbm"><img src="~/assets/images/post-01-cropped.jpg" alt=""></a>
+                    </div>
+                    <div class="max-h-300" style="margin-top: -22px;">
+
+                        @*<div class="post-date"><i class="ico tp tp-clock2"></i>August 23, 2015</div>*@
+                        <div class="post-excerpt">
+                            <div class="col-md-12 column">
+                                <p>@Html.GetGridHtml(aboutSbm, "mainContent", "Bootstrap3", fluidImages: true)</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <p class="more-btn-holder"><a href="/about-sbm">Read All</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+

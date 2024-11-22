@@ -1,0 +1,25 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Extensions
+@{
+    Layout = "Master.cshtml";
+}
+<div id="core" class="mt-10">
+    <div class="c-container">
+        <div class="row">
+            <div class="middle-column col-md-12">
+                <div id="page-content">
+                    <div class="page-content-inner">
+                        <div class="document-page document-list-page">
+                            <div class="c-content-box">
+                                @Html.GetGridHtml(Model, "mainContent", "Bootstrap3", fluidImages: true)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="c-separator m-margin-top-small m-margin-bottom-small m-transparent hidden-lg hidden-md">
+            </div>
+        </div>
+    </div>
+</div>
+

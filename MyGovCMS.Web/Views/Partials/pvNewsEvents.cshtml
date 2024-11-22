@@ -1,0 +1,105 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@using MyGovCMS.Core.Helpers
+@{
+
+    var currentNode = Model.AncestorOrSelf();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var newseventslists = currentNode.Descendants<NewsAndEventsList>().FirstOrDefault();
+    var newsevents = currentNode.Descendants<NewsEvents>().Where(x => x.IsVisible()).OrderByDescending(y => y.Date);
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isNewsEventListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = isNewsEventListPage ? 10 : 6;
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfReports = newsevents.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = newsevents.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+    var pageNo = pageNumber;
+}
+
+@if (isNewsEventListPage)
+{
+        <div class=" events-widget">
+            @if (newsevents != null && newsevents.Any())
+            {
+                <ul class="event-list">
+                    @foreach (var report in pageOfReports)
+                    {
+                        <li class="event m-has-date">
+                            <div class="event-inner">
+                                <div class="event-date" title="@report.Date.ToString("MMMM dd,yyyy")">
+                                    <span class="event-month">@report.Date.ToString("MMM")</span>
+                                    <span class="event-day">@report.Date.ToString("dd")</span>
+                                </div>
+                                <h4 class="event-title"><a href="@report.Url()">@report.HeaderTitle</a></h4>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    if (pageCount > 1)
+    {
+        <div class="text-right">Showing @pageSize per page</div>
+        <div class="c-pagination">
+
+            <ul>
+                <li>
+                    @if (pageNumber > 1)
+                    {
+                        { pageNo = pageNumber - 1; }
+                        <a class="btn btn-primary float-left" href="@currentNode.Url()?page=@pageNo&size=@pageSize"><i class="fa fa-arrow-left"></i> Prev</a>
+                    }
+                    else
+                    {
+                        <span class="disabled">Prev</span>
+                    }
+                </li>
+                <li> <span class="text-primary">Page @pageNumber of @pageCount</span></li>
+                <li>
+                    @if (pageNumber < pageCount)
+                    {
+                        { pageNo = pageNumber + 1; }
+                        <a class="btn btn-primary float-right" href="@currentNode.Url()?page=@pageNo &size=@pageSize">Next <i class="fa fa-arrow-right"></i></a>
+                    }
+                    else
+                    {
+                        <span class="disabled">Next</span>
+                    }
+                </li>
+            </ul>
+        </div>
+
+    }
+}
+else
+{
+    <div class="widget events-widget">
+        <div class="widget-inner">
+            <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-calendar-full"></i>Upcoming Events</h3>
+            <div class="widget-content">
+                @if (newsevents != null && newsevents.Any())
+                {
+                    <ul class="event-list">
+                        @foreach (var report in pageOfReports)
+                        {
+                            <li class="event m-has-date">
+                                <div class="event-inner">
+                                    <div class="event-date" title="@report.Date.ToString("MMMM dd,yyyy")">
+                                        <span class="event-month">@report.Date.ToString("MMM")</span>
+                                        <span class="event-day">@report.Date.ToString("d")</span>
+                                    </div>
+                                    <h4 class="event-title"><a href="@report.Url()">@report.HeaderTitle</a></h4>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                <p class="show-all-btn"><a href="@(currentNode.Url())">@Umbraco.GetDictionaryValue("ReportsList.ViewAll")</a></p>
+            </div>
+        </div>
+    </div>
+
+
+}

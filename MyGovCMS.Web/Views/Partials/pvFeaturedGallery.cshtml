@@ -1,0 +1,49 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@{
+    var photoAlbums = Model.Root().Descendants<PhotoAlbum>().Where(x => x.IsVisible()).OrderByDescending(y => y.CreateDate);
+
+}
+@if (photoAlbums.Count() > 0)
+{
+    foreach (var album in photoAlbums)
+    {
+        if (album.HasValue("photosFolder"))
+        {
+
+            var hasimage = album.Value<IPublishedContent>("photosFolder");
+            if (hasimage.Children().Any())
+            {
+                var featuredimage = album.Value<IPublishedContent>("photosFolder").Children().FirstOrDefault();
+
+                <div class="widget featured-gallery-widget">
+                    <div class="widget-inner">
+                        <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-pictures"></i>Featured Gallery</h3>
+                        <div class="widget-content">
+                            <div class="gallery-image" title="featured gallery">
+                                <a href="/gallery"><img src="@featuredimage.Url()" alt="featured image"></a>
+                            </div>
+                            <p class="show-all-btn"><a href="/gallery">See All Galleries</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+            break;
+        }
+
+    }
+}
+else
+{
+    <div class="widget featured-gallery-widget">
+        <div class="widget-inner">
+            <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-pictures"></i>Featured Gallery</h3>
+            <div class="widget-content">
+                <div class="gallery-image" title="gallery image">
+                    <a href="/gallery"><img src="/assets/images/featured-gallery-01.jpg" alt=""></a>
+                </div>
+                <p class="show-all-btn"><a href="/gallery">See All Galleries</a></p>
+            </div>
+        </div>
+    </div>
+}

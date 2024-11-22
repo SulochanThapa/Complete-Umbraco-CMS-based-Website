@@ -1,0 +1,50 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@{
+    var currentNode = Model.AncestorOrSelf();
+    IPublishedContent homePage = Umbraco.AssignedContentItem.AncestorOrSelf("home");
+    bool isHomePage = Umbraco.AssignedContentItem.Id == homePage.Id;
+    IPublishedContent photosFolder = Umbraco.AssignedContentItem.Value<IPublishedContent>("photosFolder");
+    List<IPublishedContent> photoItems = photosFolder.Children().ToList();
+
+}
+
+@if (photoItems != null && photoItems.Any())
+{
+    <!-- GALLERY DETAIL PAGE : begin -->
+    <div class="gallery-detail-page gallery-page">
+        <!-- GALLERY : begin -->
+        <div class="c-gallery">
+            <ul class="gallery-images m-layout-masonry m-3-columns">
+                @foreach (IPublishedContent photo in photoItems)
+                {
+                    <li class="gallery-image">
+                        <a href="@photo.Url()" class="lightbox" title="photo gallery">
+                            <img src="@photo.Url()" alt="">
+                        </a>
+                    </li>
+                }
+                <!-- GALLERY IMAGE : end -->
+            </ul>
+        </div>
+        <!-- GALLERY : end -->
+        <div class="c-content-box m-no-padding">
+            <!-- GALLERY FOOTER : begin -->
+            <div class="gallery-footer">
+                <div class="gallery-footer-inner">
+                    <div style="text-align: justify">
+                        @Model.GetProperty("albumDescription").Value()
+                    </div>
+                    <!-- GALLERY DATE : begin -->
+                    <div class="gallery-date text-right">
+                        <i class="text-muted tp tp-clock2"></i>@Model.CreateDate.ToString("MMMM dd,yyyy") in
+                        <a href="@Model.Parent.Url()">@Model.Parent.Name</a>
+                    </div>
+                    <!-- GALLERY DATE : end -->
+                </div>
+            </div>
+            <!-- GALLERY FOOTER : end -->
+        </div>
+    </div>
+}
+

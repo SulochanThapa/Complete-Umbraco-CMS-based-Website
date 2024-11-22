@@ -1,0 +1,120 @@
+﻿@charset "utf-8";
+
+body {
+    background: #000;
+    color: #ffff00;
+}
+
+#core {
+
+    /*background-image: url(/assets/images/bg-black.png);*/
+    background:#000;
+}
+
+
+.page-title h1 {
+    color: #ffff00;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffff00;
+}
+
+a {
+    color: #ffff00;
+}
+
+.side-menu > ul > li.m-hover > a, .side-menu > ul > li > a {
+    color: #ffff00;
+}
+
+    .side-menu > ul > li.m-hover > a, .side-menu > ul > li > a:hover {
+        color: #ffff00;
+    }
+
+.c-content-box {
+    background: #211f1f;
+}
+
+.sidebar .widget {
+    background-color: #211f1f;
+}
+
+.sidebar .widget-title {
+    color: #ffff00;
+}
+
+.sidebar .widget-ico {
+    color: #ffff00;
+}
+
+.c-team-member .member-role {
+    color: #ffff00;
+}
+
+#bottom-panel .widget-title {
+    color: #ffff00;
+}
+
+#bottom-panel .widget-ico {
+    color: #ffff00;
+}
+
+.widget-content a, p {
+    color: #ffff00;
+}
+
+.sidebar .locale-info-widget.m-has-bg h4 {
+    color: #ffff00;
+}
+
+.sidebar .locale-info-widget.m-has-bg {
+    color: #ffff00;
+}
+
+.c-post-list .post-list-title .ico {
+    color: #ffff00;
+}
+
+.breadcrumbs {
+    color: #ffff00;
+}
+
+    .breadcrumbs a {
+        color: #ffff00;
+    }
+
+#page-header {
+    background-color: #211f1f;
+}
+
+.topStrip {
+    color: #ffff00;
+    background: #000;
+}
+
+    .topStrip a {
+        color: #ffff00;
+    }
+
+.rightLinks li:not(:first-child) {
+    border-left: 1px solid #ffff00;
+}
+
+.documents-widget .published-date {
+    color: #ffff00;
+}
+
+.govtMyGov img {
+    filter: invert(100%);
+}
+
+.c-post-list .post-list-title a {
+    color: #ffff00;
+}
+table tbody > tr:nth-child(2n) > td {
+    background-color: #211f1f;
+}
+.gallery-list-page .c-gallery .gallery-image-inner {
+    background-color: #211f1f;
+}

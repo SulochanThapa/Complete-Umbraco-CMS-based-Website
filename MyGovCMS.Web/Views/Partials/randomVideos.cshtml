@@ -1,0 +1,42 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@using MyGovCMS.Core.Extensions
+@{
+    /**/
+
+    var currentNode = Model.AncestorOrSelf();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var reportslist = currentNode.Descendants<VideoGallery>().FirstOrDefault();
+    var reports = currentNode.Descendants<VideoGallery>().Where(x => x.IsVisible()).OrderByDescending(y => y.CreateDate);
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isReportListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = 2;
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfReports = reports.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = reports.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+}
+
+@if (reports != null && reports.Any())
+{
+    <div class="container-fluid">
+        <div class="col-md-12 mt-2">
+            <div class="row">
+                @foreach (var report in pageOfReports)
+                {
+                <div class="col-md-6 text-center">
+                    @Html.GetGridHtml(report, "EmbedUrl", "Bootstrap3", fluidImages: true)
+                    <span class="video-title ml-5" title="@(!string.IsNullOrWhiteSpace(report.VideoTitle) ? report.VideoTitle : report.Name)">@(!string.IsNullOrWhiteSpace(report.VideoTitle) ? report.VideoTitle.ToUpper() : report.Name)</span>
+                </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+    <div id="paging" class="clearfix">
+        <a class="btn btn-primary btn-sm float-right" href="/video-gallery">View All...</a>
+    </div>
+
+}

@@ -1,0 +1,44 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Extensions
+@{
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var currentNode = Model.Root();
+    var parentModel = currentNode.Descendants<VideoGallery>().FirstOrDefault();
+    var servicesParent = currentNode.Children().Where(x => x.Name == "Services").FirstOrDefault();
+
+    var services = servicesParent.Descendants<RichContent>().ToList();
+}
+
+<div class="site-main">
+    <section class="ttm-row first-row-title-section ttm-bgcolor-darkgrey ttm-bg ttm-bgimage-yes bg-img4 clearfix">
+        <div class="ttm-row-wrapper-bg-layer ttm-bg-layer"></div>
+        <div class="container">
+            <div class="row">
+                <!-- row -->
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="text-center">
+                        <div class="ttm-play-icon-btn mb-35">
+                            <div class="ttm-play-icon-animation">
+                                <a href="@parentModel.VideoUrl" target="_self" class="ttm_prettyphoto">
+                                    <div class="ttm-icon ttm-icon_element-bgcolor-white ttm-icon_element-size-sm ttm-icon_element-style-round">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- section-title -->
+                        <div class="section-title row-title clearfix">
+                            <div class="title-header">
+                                <h2 class="title">@parentModel.VideoTitle</h2>
+                            </div>
+                            <div class="title-desc">@parentModel.VideoDescription</div>
+                        </div><!-- section-title end -->
+                        <div class="mt-40">
+                            <a href="#" class="ttm-btn ttm-btn-size-md ttm-btn-style-border ttm-btn-color-white">More Services</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

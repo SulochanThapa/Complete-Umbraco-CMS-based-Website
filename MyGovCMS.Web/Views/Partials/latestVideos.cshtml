@@ -1,0 +1,86 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Helpers
+@using MyGovCMS.Core.Extensions
+@{
+    /**/
+
+    var currentNode = Model.AncestorOrSelf();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var reportslist = currentNode.Descendants<VideoGallery>().FirstOrDefault();
+    var reports = currentNode.Descendants<VideoGallery>().Where(x => x.IsVisible()).OrderByDescending(y => y.CreateDate);
+    //var reports = Model.Root().Descendants().Where(x => x.ContentType.Alias == "reports" && x.IsVisible());
+    var isReportListPage = currentNode.Id == Model.Id;
+    var fallbackPageSize = isReportListPage ? 10 : 5;
+    var pageNumber = QueryStringHelper.GetIntFromQueryString(Request, "page", 1);
+    var pageSize = QueryStringHelper.GetIntFromQueryString(Request, "size", fallbackPageSize);
+    var pageOfReports = reports.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalItemCount = reports.Count();
+    var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
+}
+
+
+
+@if (reports != null && reports.Any())
+{
+<div class="c-content-box">
+    <div class="post-list-inner">
+        <h2 class="post-list-title"><a href="/videos">Video <strong>Gallery</strong></a></h2>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            @foreach (var report in pageOfReports)
+            {
+                @*<div class="col-md-6">
+                <label class="video-title ml-3" title="@(report.VideoTitle)">@report.VideoTitle</label>
+                @Html.GetGridHtml(report, "EmbedUrl", "Bootstrap3")
+            </div>*@
+                string[] vArr = @report.VideoUrl.Split('?');
+                string vLink = "https://www.youtube.com/embed/" + vArr[1].Substring(2) + "?modestbranding=1&rel=0";
+                <div class="col-md-6">
+                    <label class="video-title ml-3" title="@report.VideoTitle">@report.VideoTitle</label>
+                    <iframe width="100%" src="@vLink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+    <div id="paging" class="clearfix">
+        @if (isReportListPage)
+        {
+            if (pageCount > 1)
+            {
+                <div class="paging-block">
+                    @if (pageNumber > 1)
+                    {
+                        { pageNumber = pageNumber - 1; }
+                        <a class="btn btn-primary float-left" href="@currentNode.Url()?page=@pageNumber&size=@pageSize">Prev</a>
+                    }
+                    else
+                    {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
+                <div class="paging-block text-center">
+                    <span>Page @pageNumber of @pageCount</span>
+                </div>
+                <div class="paging-block">
+                    @if (pageNumber < pageCount)
+                    {
+                        { pageNumber = pageNumber + 1; }
+                        <a class="btn btn-primary float-right" href="@currentNode.Url()?page=@pageNumber&size=@pageSize">Next</a>
+                    }
+                    else
+                    {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
+
+            }
+        }
+        else
+        {
+            <a class="btn btn-primary float-right" href="@(currentNode.Url())">@Umbraco.GetDictionaryValue("ReportsList.ViewAll")</a>
+        }
+    </div>
+
+}

@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using MyGovCMS.Core.Extensions
+@{
+    var currentNode = Model.AncestorOrSelf();
+    //var articlesParent = rootNode.Children("dArticlesMain").FirstOrDefault();
+    var aboutUs = currentNode.Descendants<AboutUs>().FirstOrDefault();
+}
+
+<div class="site-main">
+    <section class="ttm-row aboutus-section clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- row -->
+                <div class="col-lg-8">
+                    <!-- section title -->
+                    <div class="section-title with-desc clearfix">
+                        <div class="title-header">
+                            <h5>
+                                @aboutUs.HeaderTitle
+                            </h5>
+                            <h2 class="title">
+                                @aboutUs.HeaderSubTitle
+                            </h2>
+                        </div>
+                        <div class="title-desc text-justify">
+                            @Html.GetGridHtml(aboutUs, "mainContent", "Bootstrap3", fluidImages: true)
+                        </div>
+                    </div><!-- section title end -->
+                    <!-- row -->
+                    <!-- row END-->
+                    <!-- separator -->
+                    <div class="separator">
+                        <div class="sep-line mt-25 mb-30"></div>
+                    </div>
+                    <!-- separator -->
+                    <div class="about-text-box fs-16">
+                        <span>Get in touch <a href="#" class="fw-500"><u>Click here</u></a></span>
+                        @*<strong class="fs-18">: (03592) 295184</strong>*@
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="position-relative res-991-mt-30">
+                        <!-- ttm_single_image-wrapper -->
+                        <!-- ttm_single_image-wrapper end -->
+                        <!--featured-icon-box-->
+                        <div class="about-overlay-01">
+                            <p class="mb-0" style="font-family:Playfair Display; font-style:italic">Emerging <br>IT Firm In<br>Sikkim</p>
+                            @*<img src="~/Content/images/menu/emerging.png" />*@
+                        </div>
+                        <!-- featured-icon-box end-->
+                    </div>
+                </div>
+            </div>
+            <!-- row end -->
+            <!-- row -->
+            <div class="row">
+
+            </div><!-- row end-->
+        </div>
+    </section>
+
+</div>
+

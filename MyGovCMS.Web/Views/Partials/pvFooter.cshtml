@@ -1,0 +1,113 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    var selection = Umbraco.ContentAtRoot().FirstOrDefault()
+    .Children()
+    .Where(x => x.IsVisible());
+}
+<footer id="footer" class="m-has-bg">
+    <div class="footer-bg">
+        <div class="footer-inner">
+            <!-- FOOTER TOP : begin -->
+            <div class="footer-top">
+                <div class="c-container">
+                    <!-- BOTTOM PANEL : begin -->
+                    <div id="bottom-panel">
+                        <div class="bottom-panel-inner">
+                            <div class="c-container">
+                                <div class="col-md-3">
+                                    <!-- TEXT WIDGET : begin -->
+                                    <div class="widget">
+                                        <hr class="c-separator m-transparent hidden-lg hidden-md">
+                                        <div class="widget-inner">
+                                            <h3 class="widget-title">My Umbraco Website (URBAN) MyGov</h3>
+                                            <div class="widget-content">
+                                                <p>Copyright @@ 2021 MyGov Department - Government of MyGov.</p>
+                                                <p> All Rights Reserved. </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- TEXT WIDGET : end -->
+                                </div>
+                                <div class="widget-col col-md-3">
+                                    <!-- DEFINITION LIST WIDGET : begin -->
+                                    <div class="widget definition-list-widget">
+                                        <hr class="c-separator m-transparent hidden-lg hidden-md">
+                                        <div class="widget-inner">
+                                            <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-list4"></i>Quick Links</h3>
+                                            <div class="widget-content">
+                                                <p><a href="/" class="text-white">Home</a></p>
+                                                @foreach (var item in selection)
+                                                {
+                                                    <p> <a href="@item.Url()" class="text-white">@item.Name</a></p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- DEFINITION LIST WIDGET : end -->
+                                </div>
+                                <div class="widget-col col-md-3">
+                                    <!-- DEFINITION LIST WIDGET : begin -->
+                                    <div class="widget definition-list-widget">
+                                        <hr class="c-separator m-transparent hidden-lg hidden-md">
+                                        <div class="widget-inner">
+                                            <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-list4"></i>Website Policies</h3>
+                                            <div class="widget-content">
+                                                <p><a href="/terms-conditions" class="text-white">Terms & Conditions</a></p>
+                                                <p><a href="/privacy-policy" class="text-white">Privacy Policy</a></p>
+                                                <p><a href="/hyperlinking-policy" class="text-white">Hyperlinking Policy</a></p>
+                                                <p><a href="/copyright-policy" class="text-white">Copyright Policy</a></p>
+                                                <p><a href="/disclaimer" class="text-white">Disclaimer</a></p>
+                                                <p><a href="/sitemap" class="text-white">Sitemap</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- DEFINITION LIST WIDGET : end -->
+                                </div>
+                                <div class="widget-col col-md-3">
+                                    <!-- TEXT WIDGET : begin -->
+                                    <div class="widget">
+                                        <hr class="c-separator m-transparent hidden-lg hidden-md">
+                                        <div class="widget-inner">
+                                            <h3 class="widget-title m-has-ico"><i class="widget-ico tp tp-envelope"></i>Address</h3>
+                                            <div class="widget-content">
+                                                <p>MyGov Department</p>
+                                                <p>
+                                                    City : <br />
+                                                    Phone : +91 (43234) XXXXX<br />
+                                                    Fax No: +91 (34567) XXXXXX<br />
+                                                    e-mail: mygov[at]gmail[dot]com<br />
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- TEXT WIDGET : end -->
+                                </div>
+
+                            </div>
+                            <div class="c-container">
+                                <div class="widget-col col-md-12">
+                                    <!-- TEXT WIDGET : begin -->
+                                    <div class="widget">
+                                        <div class="widget-inner">
+                                            <div class="widget-content" style="text-align:center;font-size:16px;color:#fff;">
+                                                @{int visitorcount = 3234;
+                                                    visitorcount = visitorcount + @Reflections.UmbracoUtilities.PageViewCounter.GetPageViewCount(Model.Root().Id);
+                                                }
+                                                || <i class="tp tp-man-woman text-primary"></i> Visitors Count: @visitorcount ||
+                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- TEXT WIDGET : end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BOTTOM PANEL : end -->
+                </div>
+            </div>
+            <!-- FOOTER TOP : end -->
+
+        </div>
+    </div>
+</footer>

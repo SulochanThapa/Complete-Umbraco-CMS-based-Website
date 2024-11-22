@@ -1,0 +1,56 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.Reports>
+@using MyGovCMS.Core.Extensions
+@{
+    Layout = "Master.cshtml";
+}
+
+@* the fun starts here *@
+
+<main id="main">
+    @*<section id="topsection" class="d-flex align-items-center">
+            <div class="container">
+                <h1></h1>
+                <h2>@Model.Name</h2>
+            </div>
+        </section>*@
+    <!-- ======= About Section ======= -->
+    <section id="reportdetails" class="reportdetails mt-5">
+        <div class="container-fluid mt-5">
+
+            <div class="row">
+                @Html.Partial("~/Views/Partials/sideMenu.cshtml")
+                <div class="col-xl-7 col-lg-7 icon-boxes d-flex flex-column align-items-stretch text-justify">
+                    <img src="~/assets/img/015-telegram.svg" class="bg-image" />
+                    <div class="section-title">
+                        <h2>
+                            @if (!string.IsNullOrWhiteSpace(Model.HeaderTitle))
+                            {
+                                <span>@Model.HeaderTitle</span>
+                            }
+                            else
+                            {
+                                <span>@Model.Name</span>
+                            }
+                        </h2>
+                        @if (!string.IsNullOrWhiteSpace(Model.HeaderSubtitle))
+                        {
+                            <span>@Model.HeaderSubtitle</span>
+                        }
+                        <span>Published On: @Model.Date.ToString("dd MMM yyyy")</span>
+                    </div>
+                    <div class="container text-right">
+                        @if (Model.HasProperty("UploadFile"))
+                        {
+                            if (Model.HasValue("UploadFile"))
+                            {
+                                <a href="@Model.Value("UploadFile")"><i class="icofont-download icofont-1-6x"></i>  View/Download</a>
+                            }
+                        }
+                    </div>
+                    @Html.GetGridHtml(Model, "mainContent", "Bootstrap3", fluidImages: true)
+                </div>
+
+            </div>
+        </div>
+    </section><!-- End About Section -->
+</main><!-- End #main -->

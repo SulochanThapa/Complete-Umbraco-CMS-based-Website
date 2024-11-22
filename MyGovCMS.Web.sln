@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGovCMS.Web", "MyGovCMS.Web\MyGovCMS.Web.csproj", "{B21875C9-FE8A-4EB5-B3AC-752F6E912E55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGovCMS.Core", "MyGovCMS.Core\MyGovCMS.Core.csproj", "{60C6C471-0BAD-48C5-9911-FE997FEF2377}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Live|Any CPU = Live|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B21875C9-FE8A-4EB5-B3AC-752F6E912E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B21875C9-FE8A-4EB5-B3AC-752F6E912E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B21875C9-FE8A-4EB5-B3AC-752F6E912E55}.Live|Any CPU.ActiveCfg = Live|Any CPU
+		{B21875C9-FE8A-4EB5-B3AC-752F6E912E55}.Live|Any CPU.Build.0 = Live|Any CPU
+		{60C6C471-0BAD-48C5-9911-FE997FEF2377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C6C471-0BAD-48C5-9911-FE997FEF2377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C6C471-0BAD-48C5-9911-FE997FEF2377}.Live|Any CPU.ActiveCfg = Live|Any CPU
+		{60C6C471-0BAD-48C5-9911-FE997FEF2377}.Live|Any CPU.Build.0 = Live|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9A1A808-D74E-4A57-BAE2-0875CFAC815D}
+	EndGlobalSection
+EndGlobal

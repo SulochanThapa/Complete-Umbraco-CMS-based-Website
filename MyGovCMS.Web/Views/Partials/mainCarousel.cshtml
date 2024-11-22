@@ -1,0 +1,58 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.Home>
+
+
+@{
+    var carousel = Model.Value<IEnumerable<IPublishedElement>>("carousel");
+    var carouselID = "carousel";
+    //IEnumerable<IPublishedContent> carousel = Umbraco.AssignedContentItem.Value<IEnumerable<IPublishedContent>>(carouselId);
+}
+
+
+@if (carousel != null && carousel.Any())
+{
+   
+    <div class="carousel slide" data-ride="carousel" id="@carouselID">
+        <div class="carousel-inner" role="listbox">
+            @{
+                int slideCount = 0;
+                foreach (var item in carousel)
+                {
+                    string title = item.Value<string>("slideTitle");
+                    string subtitle = item.HasValue("slideDescription") ? item.Value<string>("slideSubtitle") : "";
+                    string imageUrl = item.HasValue("slideImage") ? item.Value<IPublishedContent>("slideImage").GetCropUrl(1550,531) : "/img/carousel.jpg";
+                    string link = item.HasValue("slideLink") ? item.Value<string>("slideLink") : "";
+
+
+            <div class="mt-sm-0 mt-md-0  mt-lg-5 mt-xl-5 carousel-item @(slideCount == 0 ? "active" : "")">
+                <img src="@(imageUrl)" class="img-fluid" alt="carousel image">
+                
+                    <div class="carousel-caption">
+                        <h3>
+                            @if (link != "")
+                            {
+                                <a href="@link">@title</a>
+                            }
+                            else
+                            {
+                                <span>@title</span>
+                            }
+                        </h3>
+                        <p>@subtitle</p>
+                </div>
+            </div>
+                    slideCount++;
+                }
+            }
+        </div>
+        <div>
+            <a class="left carousel-control-prev" href="#@carouselID" role="button" data-slide="prev"><i class="carousel-control-prev-icon"></i><span class="sr-only">Previous</span></a>
+            <a class="right carousel-control-next" href="#@carouselID" role="button" data-slide="next"><i class="carousel-control-next-icon"></i><span class="sr-only">Next</span></a>
+        </div>
+        @*<ol class="carousel-indicators">
+            @for (int i = 0; i < slideCount; i++)
+            {
+                <li data-target="#@carouselID" data-slide-to="@i" class="@(i == 0 ? "active" : null)"></li>
+            }
+        </ol>*@
+    </div>
+}

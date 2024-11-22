@@ -1,0 +1,81 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.AboutUs>
+@using MyGovCMS.Core.Extensions
+@{
+    Layout = "Master.cshtml";
+}
+<div class="ttm-page-title-row">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-box text-center">
+                    <div class="page-title-heading">
+                        <h1 class="title">
+                            @Model.Name
+                        </h1>
+
+                    </div><!-- /.page-title-captions -->
+                    <div class="breadcrumb-wrapper">
+                        <span>
+                            <a title="Homepage" href="@Model.Parent.Url()"><i class="ti ti-home"></i>&nbsp;&nbsp;@Model.Parent.Name</a>
+                        </span>
+                        <span class="ttm-bread-sep">&nbsp; : : &nbsp;</span><span> @Model.Name</span>
+                    </div>
+                </div>
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- page-title end-->
+<div class="site-main">
+    <section class="ttm-row aboutus-section clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- row -->
+                <div class="col-lg-8">
+                    <!-- section title -->
+                    <div class="section-title with-desc clearfix">
+                        <div class="title-header">
+                            <h5>
+                                @Model.HeaderTitle
+                            </h5>
+                            <h2 class="title">
+                                @Model.HeaderSubTitle
+                            </h2>
+                        </div>
+                        <div class="title-desc text-justify">
+                            @Html.GetGridHtml(Model, "mainContent", "Bootstrap3", fluidImages: true)
+                        </div>
+                    </div><!-- section title end -->
+                    <!-- row -->
+                    <!-- row END-->
+                    <!-- separator -->
+                    <div class="separator">
+                        <div class="sep-line mt-25 mb-30"></div>
+                    </div>
+                    <!-- separator -->
+                    <div class="about-text-box fs-16">
+                        <span>Call to ask <a href="#" class="fw-500"><u>any question</u></a></span>
+                        <strong class="fs-18">: (03592) 295184</strong>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="position-relative res-991-mt-30">
+                        <!-- ttm_single_image-wrapper -->
+                        <!-- ttm_single_image-wrapper end -->
+                        <!--featured-icon-box-->
+                        <div class="about-overlay-01">
+                            <p class="mb-0">EMERGING <br>IT FIRM IN<br>SIKKIM</p>
+                        </div>
+                        <!-- featured-icon-box end-->
+                    </div>
+                </div>
+            </div>
+            <!-- row end -->
+            <!-- row -->
+            <div class="row">
+
+            </div><!-- row end-->
+        </div>
+    </section>
+
+</div>
+

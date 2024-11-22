@@ -1,0 +1,20 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    var selection = Umbraco.ContentAtRoot().FirstOrDefault()
+    .Children()
+    .Where(x => x.IsVisible());
+}
+<nav class="header-menu">
+    <ul>
+        <li>
+
+            <a href="/">Home</a>
+        </li>
+        @foreach (var item in selection)
+        {
+            <li>
+                <a href="@item.Url()" class="navlink w-nav-link">@item.Name</a>
+            </li>
+        }
+    </ul>
+</nav>
